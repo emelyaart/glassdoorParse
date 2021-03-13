@@ -37,23 +37,32 @@ class Vacancy(object):
 
 
 class VacancyParser(object):
-    def __init__(self, args):
+    def __init__(self, kwargs):
+        print('Инициализация объекта...')
         self.host = 'https://www.glassdoor.com'
         self.url = self.host + '/Job/jobs.htm'
+        self.headers = config.headers
+        location = self.get_location_id(kwargs['location'])[0]
+
+        if kwargs.get('keywords', None) is not None:
+            keywords = ' + '.join(kwargs['keywords'].split('+'))
+        else:
+            keywords = ''
+
         self.payload = {
             'suggestCount': '0',
             'suggestChosen': 'false',
             'clickSource': 'searchBtn',
-            'typedKeyword': 'Python+Developer',
-            'sc.keyword': 'Python+Developer',
-            'locT': 'N',
-            'locId': '205'
+            'typedKeyword': keywords,
+            'sc.keyword': keywords,
+            'locT': location['locationType'],
+            'locId': location['realId']
         }
-        self.headers = config.headers
+        print('Инициализация объекта завершена...')
+        print(20 * '-')
 
     def get_urls(self):
         print('Запускаем парсинг URLs...')
-        print(20 * '-')
         response = requests.get(
             self.url, headers=config.headers, params=self.payload
         )
@@ -67,7 +76,7 @@ class VacancyParser(object):
             r'[\'\"]seoJobLink[\'\"]\s*\:\s*[\'\"]([^\'\"]*)[\'\"]',
             script.string, flags=re.I
         )
-        print(f'Парсинг {len(urls)} URL завершен...')
+        print(f'Нашлось {len(urls)} URL завершен...')
         print(20 * '-')
         return urls
 
@@ -101,12 +110,12 @@ class VacancyParser(object):
         with open('output.txt', 'w', encoding='utf-8') as f:
             json.dump(output, f, ensure_ascii=False, indent=4)
 
-    def get_country_id(self, country):
-        url = self.host + (f'/findPopularLocationAjax.htm?term={ country }'
+    def get_location_id(self, location):
+        url = self.host + (f'/findPopularLocationAjax.htm?term={ location }'
                            '&maxLocationsToReturn=10')
         response = requests.get(url, headers=self.headers)
         countries = json.loads(response.content)
-        print(countries)
+        return countries
 
     def get_vacancies(self):
         urls = self.get_urls()
@@ -114,11 +123,25 @@ class VacancyParser(object):
 
 
 def main():
-    parser = VacancyParser(
-        **dict(arg.split('=') for arg in sys.argv[1:])
-    )
-    # parser.get_vacancies()
-    parser.get_country_id('Moscow')
+    kwargs = dict(arg.split('=') for arg in sys.argv[1:])
+    if 'help' in kwargs:
+        print(20 * '-')
+        print('"location" - страна или город.'
+              ' Например: "location=Russia"')
+        print('"keywords" - Ключевые слова запроса, несколько слов'
+              ' разделите знаком "+". Например: "keywords=Python+Junior"')
+        print('"location=remote" - для поиска удаленной работы укажите '
+              'Remote в поле location')
+        print(20 * '-')
+    elif 'location' in kwargs:
+        parser = VacancyParser(kwargs)
+        parser.get_vacancies()
+    else:
+        print(20 * '-')
+        print('Укажите как минимум параметр location, '
+              'например: "location=Russia"')
+        print('Для вызова списка всех методов отправьте параметр "help="')
+        print(20 * '-')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,422 @@
+[
+    {
+        "id": "3770484137",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-luxoft-JV_KO0,16_KE17,23.htm?jl=3770484137",
+        "location": {
+            "country": null,
+            "city": "Remote"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Python Developer",
+        "salary": null
+    },
+    {
+        "id": "3778396847",
+        "source": "https://www.glassdoor.com/job-listing/regular-python-developer-luxoft-JV_IC3348306_KO0,24_KE25,31.htm?jl=3778396847",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Regular Python Developer",
+        "salary": null
+    },
+    {
+        "id": "3695135069",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-betmaster-JV_IC3318743_KO0,16_KE17,26.htm?jl=3695135069",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "Betmaster",
+            "link": null
+        },
+        "position": "Python Developer",
+        "salary": null
+    },
+    {
+        "id": "3814481904",
+        "source": "https://www.glassdoor.com/job-listing/senior-backend-developer-go-python-developer-gelato-JV_IC3348306_KO0,44_KE45,51.htm?jl=3814481904",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Gelato",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Gelato-EI_IE1297272.11,17.htm"
+        },
+        "position": "Senior Backend Developer (Go/Python Developer)",
+        "salary": null
+    },
+    {
+        "id": "4013100690",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-paysend-group-JV_IC3348306_KO0,16_KE17,30.htm?jl=4013100690",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Paysend Group",
+            "link": null
+        },
+        "position": "Python Developer",
+        "salary": null
+    },
+    {
+        "id": "4030154834",
+        "source": "https://www.glassdoor.com/job-listing/developer-python-development-kaspersky-lab-JV_IC3348306_KO0,28_KE29,42.htm?jl=4030154834",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Kaspersky Lab",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Kaspersky-EI_IE19041.11,20.htm"
+        },
+        "position": "Developer Python Development",
+        "salary": null
+    },
+    {
+        "id": "3714525020",
+        "source": "https://www.glassdoor.com/job-listing/backend-python-django-developer-exante-JV_IC3348306_KO0,31_KE32,38.htm?jl=3714525020",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "EXANTE",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Exante-EI_IE498836.11,17.htm"
+        },
+        "position": "Backend Python Django Developer",
+        "salary": null
+    },
+    {
+        "id": "4027857333",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-development-kaspersky-lab-JV_IC3348306_KO0,28_KE29,42.htm?jl=4027857333",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Kaspersky Lab",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Kaspersky-EI_IE19041.11,20.htm"
+        },
+        "position": "Python Developer Development",
+        "salary": null
+    },
+    {
+        "id": "3430957215",
+        "source": "https://www.glassdoor.com/job-listing/software-engineer-provectus-JV_IC3405196_KO0,17_KE18,27.htm?jl=3430957215",
+        "location": {
+            "country": null,
+            "city": "Kazan"
+        },
+        "employer": {
+            "name": "Provectus",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Provectus-EI_IE725839.11,20.htm"
+        },
+        "position": "Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "4023166974",
+        "source": "https://www.glassdoor.com/job-listing/software-developer-python-network-architecture-luxoft-JV_KO0,46_KE47,53.htm?jl=4023166974",
+        "location": {
+            "country": null,
+            "city": "Remote"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Software Developer (Python) Network Architecture",
+        "salary": null
+    },
+    {
+        "id": "3559437062",
+        "source": "https://www.glassdoor.com/job-listing/c-python-developer-yellow-team-semrush-JV_IC3318743_KO0,30_KE31,38.htm?jl=3559437062",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "SEMrush",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Semrush-EI_IE1084676.11,18.htm"
+        },
+        "position": "C++/Python Developer (Yellow Team)",
+        "salary": null
+    },
+    {
+        "id": "3545703641",
+        "source": "https://www.glassdoor.com/job-listing/full-stack-developer-python-django-vue-exante-JV_IC3348306_KO0,38_KE39,45.htm?jl=3545703641",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "EXANTE",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Exante-EI_IE498836.11,17.htm"
+        },
+        "position": "Full stack developer (Python / Django / Vue)",
+        "salary": null
+    },
+    {
+        "id": "3821007407",
+        "source": "https://www.glassdoor.com/job-listing/go-developer-red-team-semrush-JV_IC3318743_KO0,21_KE22,29.htm?jl=3821007407",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "SEMrush",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Semrush-EI_IE1084676.11,18.htm"
+        },
+        "position": "Go Developer (Red Team)",
+        "salary": null
+    },
+    {
+        "id": "4030575218",
+        "source": "https://www.glassdoor.com/job-listing/senior-dsp-software-engineer-synopsys-JV_IC3318743_KO0,28_KE29,37.htm?jl=4030575218",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "Synopsys",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Synopsys-EI_IE2143.11,19.htm"
+        },
+        "position": "Senior DSP Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "4030858625",
+        "source": "https://www.glassdoor.com/job-listing/software-developer-emerson-JV_IC3348306_KO0,18_KE19,26.htm?jl=4030858625",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Emerson",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Emerson-EI_IE225.11,18.htm"
+        },
+        "position": "Software Developer",
+        "salary": null
+    },
+    {
+        "id": "3801420888",
+        "source": "https://www.glassdoor.com/job-listing/java-scala-developer-frozen-team-semrush-JV_IC3318743_KO0,32_KE33,40.htm?jl=3801420888",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "SEMrush",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Semrush-EI_IE1084676.11,18.htm"
+        },
+        "position": "Java/Scala Developer (Frozen Team)",
+        "salary": null
+    },
+    {
+        "id": "4023061994",
+        "source": "https://www.glassdoor.com/job-listing/python-data-modelling-developer-luxoft-JV_IC3318743_KO0,31_KE32,38.htm?jl=4023061994",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Python/Data Modelling Developer",
+        "salary": null
+    },
+    {
+        "id": "3802901111",
+        "source": "https://www.glassdoor.com/job-listing/junior-software-engineer-arkadium-JV_IC3381818_KO0,24_KE25,33.htm?jl=3802901111",
+        "location": {
+            "country": null,
+            "city": "Krasnodar"
+        },
+        "employer": {
+            "name": "Arkadium",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Arkadium-EI_IE34895.11,19.htm"
+        },
+        "position": "Junior Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "3781069267",
+        "source": "https://www.glassdoor.com/job-listing/software-engineer-jsc-atlas-copco-JV_IC3348306_KO0,17_KE18,33.htm?jl=3781069267",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "JSC Atlas Copco",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Atlas-Copco-EI_IE10368.11,22.htm"
+        },
+        "position": "Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "4028953495",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-basic-devops-experience-luxoft-JV_IC3348306_KO0,40_KE41,47.htm?jl=4028953495",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Python Developer (basic DevOps experience)",
+        "salary": null
+    },
+    {
+        "id": "4028205849",
+        "source": "https://www.glassdoor.com/job-listing/senior-middle-software-engineer-in-test-gelato-JV_IC3348306_KO0,39_KE40,46.htm?jl=4028205849",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Gelato",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Gelato-EI_IE1297272.11,17.htm"
+        },
+        "position": "Senior/Middle Software Engineer in Test",
+        "salary": null
+    },
+    {
+        "id": "3752272217",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-data-engineer-gkt-team-semrush-JV_IC3318743_KO0,39_KE40,47.htm?jl=3752272217",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "SEMrush",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Semrush-EI_IE1084676.11,18.htm"
+        },
+        "position": "Python developer/ Data Engineer (GKT Team)",
+        "salary": null
+    },
+    {
+        "id": "4023956354",
+        "source": "https://www.glassdoor.com/job-listing/middle-senior-python-developer-exante-JV_KO0,30_KE31,37.htm?jl=4023956354",
+        "location": {
+            "country": null,
+            "city": "Russia"
+        },
+        "employer": {
+            "name": "EXANTE",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Exante-EI_IE498836.11,17.htm"
+        },
+        "position": "Middle/Senior Python Developer",
+        "salary": null
+    },
+    {
+        "id": "3808167880",
+        "source": "https://www.glassdoor.com/job-listing/software-engineer-intel-JV_IC3348306_KO0,17_KE18,23.htm?jl=3808167880",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Intel",
+            "link": null
+        },
+        "position": "Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "3781939149",
+        "source": "https://www.glassdoor.com/job-listing/software-engineer-kofax-JV_IC3318743_KO0,17_KE18,23.htm?jl=3781939149",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "Kofax",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Kofax-EI_IE25124.11,16.htm"
+        },
+        "position": "Software Engineer",
+        "salary": null
+    },
+    {
+        "id": "3778391655",
+        "source": "https://www.glassdoor.com/job-listing/senior-python-developer-luxoft-JV_IC3348306_KO0,23_KE24,30.htm?jl=3778391655",
+        "location": {
+            "country": null,
+            "city": "Moscow"
+        },
+        "employer": {
+            "name": "Luxoft",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Luxoft-EI_IE116344.11,17.htm"
+        },
+        "position": "Senior Python Developer",
+        "salary": null
+    },
+    {
+        "id": "3788751748",
+        "source": "https://www.glassdoor.com/job-listing/python-developer-fullstack-developer-coffee-team-semrush-JV_IC3318743_KO0,48_KE49,56.htm?jl=3788751748",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "SEMrush",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Semrush-EI_IE1084676.11,18.htm"
+        },
+        "position": "Python Developer/Fullstack Developer (Coffee Team)",
+        "salary": null
+    },
+    {
+        "id": "3631850277",
+        "source": "https://www.glassdoor.com/job-listing/software-engineer-ii-five9-inc-JV_IC3159114_KO0,20_KE21,30.htm?jl=3631850277",
+        "location": {
+            "country": null,
+            "city": "Nizhniy Novgorod"
+        },
+        "employer": {
+            "name": "Five9, Inc.",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Five9-EI_IE433188.11,16.htm"
+        },
+        "position": "Software Engineer II",
+        "salary": null
+    },
+    {
+        "id": "4022124974",
+        "source": "https://www.glassdoor.com/job-listing/senior-backend-fullstack-developer-fully-remote-russia-prodensa-group-JV_IC3405196_KO0,54_KE55,69.htm?jl=4022124974",
+        "location": {
+            "country": null,
+            "city": "Kazan"
+        },
+        "employer": {
+            "name": "Prodensa Group",
+            "link": "https://www.glassdoor.com/Overview/Working-at-Grupo-Prodensa-EI_IE858167.11,25.htm"
+        },
+        "position": "Senior Backend / Fullstack Developer, fully remote, Russia",
+        "salary": null
+    },
+    {
+        "id": "2598903583",
+        "source": "https://www.glassdoor.com/job-listing/remote-web-developer-monetizemore-JV_IC3318743_KO0,20_KE21,33.htm?jl=2598903583",
+        "location": {
+            "country": null,
+            "city": "Saint Petersburg"
+        },
+        "employer": {
+            "name": "MonetizeMore",
+            "link": "https://www.glassdoor.com/Overview/Working-at-MonetizeMore-EI_IE1007867.11,23.htm"
+        },
+        "position": "Remote Web Developer",
+        "salary": null
+    }
+]

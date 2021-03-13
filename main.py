@@ -1,5 +1,5 @@
 import json
-import os
+import sys
 import re
 
 import requests
@@ -52,6 +52,8 @@ class VacancyParser(object):
         self.headers = config.headers
 
     def get_urls(self):
+        print('Запускаем парсинг URLs...')
+        print(20 * '-')
         response = requests.get(
             self.url, headers=config.headers, params=self.payload
         )
@@ -65,31 +67,46 @@ class VacancyParser(object):
             r'[\'\"]seoJobLink[\'\"]\s*\:\s*[\'\"]([^\'\"]*)[\'\"]',
             script.string, flags=re.I
         )
-
+        print(f'Парсинг {len(urls)} URL завершен...')
+        print(20 * '-')
         return urls
 
     def get_data(self, urls):
+        print('Запускаю парсинг вакансий...')
         output = []
+        count = 0
         for url in urls:
+            count += 1
             response = requests.get(
                 url, headers=self.headers, params=self.payload
             )
             soup = BeautifulSoup(response.text, 'lxml')
             vacancy = Vacancy()
-            vacancy.id = soup.find(class_='e1ulk49s0')['data-job-id']
+            vacancy.id = soup.find(class_='css-1m0gkmt')['data-job-id']
             vacancy.source = url
-            vacancy.city = soup.find(class_='e11nt52q2').text
-            employer_name = soup.find(class_='e11nt52q1')
+            vacancy.city = soup.find(class_='css-1v5elnn').text
+            employer_name = soup.find(class_='css-16nw49e')
             span = employer_name.find('span')
-            span.extract()
+            if span is not None:
+                span.decompose()
             vacancy.employer_name = employer_name.text
-            vacancy.employer_link = (
-                self.host + soup.find(class_='epu0oo21')['href']
-            )
-            vacancy.position = soup.find(class_='e11nt52q6').text
-            output.append(vacancy)
+            link = soup.find(class_='css-1sltc87')
+            if link is not None:
+                vacancy.employer_link = (
+                    self.host + link['href']
+                )
+            vacancy.position = soup.find(class_='css-17x2pwl').text
+            output.append(vacancy.dict())
+            print(f'Вакансия #{count} из {len(urls)} сохранена')
         with open('output.txt', 'w', encoding='utf-8') as f:
             json.dump(output, f, ensure_ascii=False, indent=4)
+
+    def get_country_id(self, country):
+        url = self.host + (f'/findPopularLocationAjax.htm?term={ country }'
+                           '&maxLocationsToReturn=10')
+        response = requests.get(url, headers=self.headers)
+        countries = json.loads(response.content)
+        print(countries)
 
     def get_vacancies(self):
         urls = self.get_urls()
@@ -97,8 +114,11 @@ class VacancyParser(object):
 
 
 def main():
-    parser = VacancyParser(args=os.sys.argv)
-    parser.get_vacancies()
+    parser = VacancyParser(
+        **dict(arg.split('=') for arg in sys.argv[1:])
+    )
+    # parser.get_vacancies()
+    parser.get_country_id('Moscow')
 
 
 if __name__ == '__main__':

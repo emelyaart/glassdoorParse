@@ -88,13 +88,9 @@ class VacancyParser(object):
 
     def get_urls(self):
         print('Запускаем парсинг URLs...')
-        session = requests.Session()
-        print(session.cookies.get_dict())
-        response = session.get(
+        response = requests.get(
             self.url, headers=self.headers, params=self.payload
         )
-        print(session.cookies.get_dict())
-        exit()
         soup = BeautifulSoup(response.text, 'lxml')
         script = soup.find(
             'div', {'id': 'PageBodyContents'}

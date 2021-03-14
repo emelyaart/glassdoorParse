@@ -5,8 +5,6 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-import cookie
-
 
 class Vacancy(object):
     def __init__(self):
@@ -39,56 +37,64 @@ class Vacancy(object):
 class VacancyParser(object):
     def __init__(self, kwargs):
         print('Инициализация объекта...')
-        self.host = 'https://www.glassdoor.com'
-        self.url = self.host + '/Job/jobs.htm'
-        location = self.get_location_id(kwargs['location'])[0]
+        try:
+            self.host = 'https://www.glassdoor.com'
+            self.url = self.host + '/Job/jobs.htm'
+            self.headers = {
+                'authority': 'www.glassdoor.com',
+                'pragma': 'no-cache',
+                'cache-control': 'no-cache',
+                'sec-ch-ua': ('"Google Chrome";v="89", "Chromium";v="89", ";'
+                              'Not A Brand";v="99"'),
+                'sec-ch-ua-mobile': '?0',
+                'upgrade-insecure-requests': '1',
+                'user-agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X '
+                               '10_15_7) AppleWebKit/537.36 (KHTML, '
+                               'like Gecko) Chrome/'
+                               '89.0.4389.82 Safari/537.36'),
+                'accept': ('text/html,application/xhtml+xml,application/xml;'
+                           'q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
+                           'application/signed-exchange;v=b3;q=0.9'),
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-user': '?1',
+                'sec-fetch-dest': 'document',
+                'referer': 'https://www.glassdoor.com/',
+                'accept-language': 'ru,en;q=0.9,en-US;q=0.8',
+                'cookie': self.get_cookie()
+            }
+            location = self.get_location_id(kwargs['location'])[0]
 
-        if kwargs.get('keywords', None) is not None:
-            keywords = ' + '.join(kwargs['keywords'].split('+'))
-        else:
-            keywords = ''
-        self.headers = {
-            'authority': 'www.glassdoor.com',
-            'pragma': 'no-cache',
-            'cache-control': 'no-cache',
-            'sec-ch-ua': ('"Google Chrome";v="89", "Chromium";v="89", ";'
-                          'Not A Brand";v="99"'),
-            'sec-ch-ua-mobile': '?0',
-            'upgrade-insecure-requests': '1',
-            'user-agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'
-                           ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/'
-                           '89.0.4389.82 Safari/537.36'),
-            'accept': ('text/html,application/xhtml+xml,application/xml;q=0.9'
-                       ',image/avif,image/webp,image/apng,*/*;q=0.8,'
-                       'application/signed-exchange;v=b3;q=0.9'),
-            'sec-fetch-site': 'same-origin',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-user': '?1',
-            'sec-fetch-dest': 'document',
-            'referer': 'https://www.glassdoor.com/',
-            'accept-language': 'ru,en;q=0.9,en-US;q=0.8',
-            'cookie': cookie
-        }
+            if kwargs.get('keywords', None) is not None:
+                keywords = ' + '.join(kwargs['keywords'].split('+'))
+            else:
+                keywords = ''
 
-        self.payload = {
-            'suggestCount': '0',
-            'suggestChosen': 'false',
-            'clickSource': 'searchBtn',
-            'typedKeyword': keywords,
-            'sc.keyword': keywords,
-            'locT': location['locationType'],
-            'locId': location['realId']
-        }
-        print('Инициализация объекта завершена...')
-        print(20 * '-')
+            self.payload = {
+                'suggestCount': '0',
+                'suggestChosen': 'false',
+                'clickSource': 'searchBtn',
+                'typedKeyword': keywords,
+                'sc.keyword': keywords,
+                'locT': location['locationType'],
+                'locId': location['realId']
+            }
+            print('Инициализация объекта завершена...')
+            print(20 * '-')
+
+        except Exception:
+            print('Протухли cookies, инициализация не удалась...')
+            exit()
 
     def get_urls(self):
         print('Запускаем парсинг URLs...')
-        response = requests.get(
+        session = requests.Session()
+        print(session.cookies.get_dict())
+        response = session.get(
             self.url, headers=self.headers, params=self.payload
         )
-        with open('index.html', 'w') as tempfile:
-            tempfile.write(response.text)
+        print(session.cookies.get_dict())
+        exit()
         soup = BeautifulSoup(response.text, 'lxml')
         script = soup.find(
             'div', {'id': 'PageBodyContents'}
@@ -137,6 +143,10 @@ class VacancyParser(object):
         response = requests.get(url, headers=self.headers)
         countries = json.loads(response.content)
         return countries
+
+    def get_cookie(self):
+        with open('cookie.txt', 'rb') as cookie:
+            return cookie.read()
 
     def get_vacancies(self):
         urls = self.get_urls()

@@ -1,6 +1,7 @@
 import json
 import sys
 import re
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -35,31 +36,43 @@ class Vacancy(object):
         }
 
 
-class VacancyParser(object):
+class Parser(object):
     def __init__(self, kwargs):
-        print('Инициализация объекта...')
-        self.host = 'https://www.glassdoor.com'
-        self.url = self.host + '/Job/jobs.htm'
-        self.headers = headers
-        location = self.get_location_id(kwargs['location'])[0]
-        if kwargs.get('keywords', None) is not None:
-            keywords = ' + '.join(kwargs['keywords'].split('+'))
-        else:
-            keywords = ''
-        self.payload = {
-            'suggestCount': '0',
-            'suggestChosen': 'false',
-            'clickSource': 'searchBtn',
-            'typedKeyword': keywords,
-            'sc.keyword': keywords,
-            'locT': location['locationType'],
-            'locId': location['realId']
-        }
-        print('Инициализация объекта завершена...')
-        print(20 * '-')
-    # except Exception as e:
-    #     print(e)
-    #     print('Протухли cookies, инициализация не удалась...')
+        try:
+            print('Инициализация объекта...')
+            self.host = 'https://www.glassdoor.com'
+            self.url = self.host + '/Job/jobs.htm'
+            self.headers = headers
+            location = self.get_location_id(kwargs['location'])
+            if kwargs.get('keywords') is not None:
+                keywords = ' + '.join(kwargs['keywords'].split('+'))
+            else:
+                keywords = ''
+            self.payload = {
+                'suggestCount': '0',
+                'suggestChosen': 'false',
+                'clickSource': 'searchBtn',
+                'typedKeyword': keywords,
+                'sc.keyword': keywords,
+                'locT': location[0]['locationType'],
+                'locId': location[0]['realId'],
+                'p': ''
+            }
+            select_location = location[0]['longName']
+            select_keywords = keywords
+            print(f'Location: { select_location }')
+            print(f'Keywords: { select_keywords }')
+            print('Инициализация объекта завершена...')
+            print(20 * '-')
+        except json.JSONDecodeError as e:
+            print(e)
+            print('Ошибка парсинга JSON в функции get_location.'
+                  ' Умерли cookie :(')
+            exit()
+        except Exception as e:
+            print(e)
+            print('Протухли cookies, инициализация не удалась...')
+            exit()
 
     def get_urls(self):
         print('Запускаем парсинг URLs...')
@@ -67,22 +80,45 @@ class VacancyParser(object):
             self.url, headers=self.headers, params=self.payload
         )
         soup = BeautifulSoup(response.text, 'lxml')
+        pages = soup.find(
+                    'div',
+                    {'data-test': 'ResultsFooter'}
+                ).find(class_='py-sm').text.split(' ')[-1]
+        print(f'Обработка страницы 1 из { int(pages) }')
         script = soup.find(
-            'div', {'id': 'PageBodyContents'}
-            ).find('script')
-        urls = re.findall(
+                'div', {'id': 'PageBodyContents'}
+                ).find('script')
+        all_urls = re.findall(
             r'[\'\"]seoJobLink[\'\"]\s*\:\s*[\'\"]([^\'\"]*)[\'\"]',
             script.string, flags=re.I
         )
-        print(f'Нашлось {len(urls)} URL завершен...')
+        if int(pages) > 1:
+            for i in range(2, int(pages) + 1):
+                print(f'Обработка страницы { i } из { int(pages) }')
+                time.sleep(1)
+                self.payload['p'] = str(i)
+                response = requests.get(
+                    self.url, headers=self.headers, params=self.payload
+                )
+                soup = BeautifulSoup(response.text, 'lxml')
+                script = soup.find(
+                    'div', {'id': 'PageBodyContents'}
+                    ).find('script')
+                urls = re.findall(
+                    r'[\'\"]seoJobLink[\'\"]\s*\:\s*[\'\"]([^\'\"]*)[\'\"]',
+                    script.string, flags=re.I
+                )
+                all_urls += urls
+        print(f'Нашлось {len(all_urls)} URL(s). Задача завершена...')
         print(20 * '-')
-        return urls
+        return all_urls
 
     def get_data(self, urls):
         print('Запускаю парсинг вакансий...')
         output = []
         count = 0
         for url in urls:
+            time.sleep(1)
             count += 1
             response = requests.get(
                 url, headers=self.headers, params=self.payload
@@ -104,17 +140,16 @@ class VacancyParser(object):
                 )
             vacancy.position = soup.find(class_='css-17x2pwl').text
             output.append(vacancy.dict())
-            print(f'Вакансия #{count} из {len(urls)} сохранена')
+            print(f'Вакансия # {count} из {len(urls)} сохранена')
         with open('output.txt', 'w', encoding='utf-8') as f:
             json.dump(output, f, ensure_ascii=False, indent=4)
+        print('Работа по сбору вакансий завершена...')
 
     def get_location_id(self, location):
         url = self.host + (f'/findPopularLocationAjax.htm?term={ location }'
                            '&maxLocationsToReturn=10')
         response = requests.get(url, headers=self.headers)
-        print(response.text)
         countries = json.loads(response.content)
-        print(countries)
         return countries
 
     def get_cookie(self):
@@ -138,7 +173,7 @@ def main():
               'Remote в поле location')
         print(20 * '-')
     elif 'location' in kwargs:
-        parser = VacancyParser(kwargs)
+        parser = Parser(kwargs)
         parser.get_vacancies()
     else:
         print(20 * '-')

@@ -1,10 +1,11 @@
+import argparse
 import json
-import sys
 import re
 import time
 
 import requests
 from bs4 import BeautifulSoup
+
 from config import headers
 
 
@@ -36,18 +37,17 @@ class Vacancy(object):
         }
 
 
-class Parser(object):
-    def __init__(self, kwargs):
+class VacanciesParser(object):
+    def __init__(self, args):
         try:
             print('Инициализация объекта...')
             self.host = 'https://www.glassdoor.com'
             self.url = self.host + '/Job/jobs.htm'
             self.headers = headers
-            location = self.get_location_id(kwargs['location'])
-            if kwargs.get('keywords') is not None:
-                keywords = ' + '.join(kwargs['keywords'].split('+'))
-            else:
-                keywords = ''
+            if args.remote == 'yes':
+                args.location = 'remote'
+            location = self.get_location_id(args.location)
+            keywords = ' + '.join(args.keywords)
             self.payload = {
                 'suggestCount': '0',
                 'suggestChosen': 'false',
@@ -118,29 +118,35 @@ class Parser(object):
         output = []
         count = 0
         for url in urls:
-            time.sleep(1)
-            count += 1
-            response = requests.get(
-                url, headers=self.headers, params=self.payload
-            )
-            soup = BeautifulSoup(response.text, 'lxml')
-            vacancy = Vacancy()
-            vacancy.id = soup.find(class_='css-1m0gkmt')['data-job-id']
-            vacancy.source = url
-            vacancy.city = soup.find(class_='css-1v5elnn').text
-            employer_name = soup.find(class_='css-16nw49e')
-            span = employer_name.find('span')
-            if span is not None:
-                span.decompose()
-            vacancy.employer_name = employer_name.text
-            link = soup.find(class_='css-1sltc87')
-            if link is not None:
-                vacancy.employer_link = (
-                    self.host + link['href']
+            try:
+                time.sleep(1)
+                count += 1
+                response = requests.get(
+                    url, headers=self.headers, params=self.payload
                 )
-            vacancy.position = soup.find(class_='css-17x2pwl').text
-            output.append(vacancy.dict())
-            print(f'Вакансия # {count} из {len(urls)} сохранена')
+                soup = BeautifulSoup(response.text, 'lxml')
+                vacancy = Vacancy()
+                vacancy.id = soup.find(class_='css-1m0gkmt')['data-job-id']
+                vacancy.source = url
+                vacancy.city = soup.find(class_='css-1v5elnn').text
+                employer_name = soup.find(class_='css-16nw49e')
+                span = employer_name.find('span')
+                if span is not None:
+                    span.decompose()
+                vacancy.employer_name = employer_name.text
+                link = soup.find(class_='css-1sltc87')
+                if link is not None:
+                    vacancy.employer_link = (
+                        self.host + link['href']
+                    )
+                vacancy.position = soup.find(class_='css-17x2pwl').text
+                output.append(vacancy.dict())
+                print(f'Вакансия # {count} из {len(urls)} сохранена')
+            except TypeError as e:
+                print(e)
+                print('Ошибка в парсинге вакансии, переходим к следующей')
+                continue
+
         with open('output.txt', 'w', encoding='utf-8') as f:
             json.dump(output, f, ensure_ascii=False, indent=4)
         print('Работа по сбору вакансий завершена...')
@@ -152,35 +158,26 @@ class Parser(object):
         countries = json.loads(response.content)
         return countries
 
-    def get_cookie(self):
-        with open('cookie.txt', 'rb') as cookie:
-            return cookie.read()
-
     def get_vacancies(self):
         urls = self.get_urls()
         self.get_data(urls)
 
 
 def main():
-    kwargs = dict(arg.split('=') for arg in sys.argv[1:])
-    if 'help' in kwargs:
-        print(20 * '-')
-        print('"location" - страна или город.'
-              ' Например: "location=Russia"')
-        print('"keywords" - Ключевые слова запроса, несколько слов'
-              ' разделите знаком "+". Например: "keywords=Python+Junior"')
-        print('"location=remote" - для поиска удаленной работы укажите '
-              'Remote в поле location')
-        print(20 * '-')
-    elif 'location' in kwargs:
-        parser = Parser(kwargs)
-        parser.get_vacancies()
-    else:
-        print(20 * '-')
-        print('Укажите как минимум параметр location, '
-              'например: "location=Russia"')
-        print('Для вызова списка всех методов отправьте параметр "help="')
-        print(20 * '-')
+    parser = argparse.ArgumentParser(description='Glassdoor Parser')
+    parser.add_argument('-l', dest='location', required=True,
+                        help='Input location for search')
+    parser.add_argument('-k', dest='keywords', default='', nargs='*',
+                        help='Input keywords for search vacancies')
+    parser.add_argument('-t', dest='job_type', default='',
+                        choices=['fulltime', 'intership'],
+                        help='Set "fulltime" or "intership"'
+                             ' to choose the type of work')
+    parser.add_argument('-r', dest='remote', default='', choices=['yes', ''],
+                        help='Set "yes", if your need remote work')
+    args = parser.parse_args()
+    vacancies_parser = VacanciesParser(args)
+    vacancies_parser.get_vacancies()
 
 
 if __name__ == '__main__':
